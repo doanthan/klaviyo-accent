@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
     "baseUrl": "."
-  },
-  "paths": {
-    "react-data-table-component-extensions": ["./dist"]
   }
 }

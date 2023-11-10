@@ -4,7 +4,7 @@ import "../styles/globals.css";
 import Head from "next/head";
 import "../styles/_user.scss";
 import "antd/dist/antd.css";
-import { useState, useEffect } from "react";
+import '../react-data-table-component-extensions/dist/index.css';
 
 function MyApp({ Component, pageProps }) {
   if (typeof window !== "undefined") {
