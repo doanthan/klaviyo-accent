@@ -2,8 +2,8 @@ import React from 'react'
 import DataTable from 'react-data-table-component';
 import moment from "moment";
 import { Button, Row } from 'reactstrap'
-import DataTableExtensions from '@/node_modules/react-data-table-component-extensions';
-import '@/node_modules/react-data-table-component-extensions/dist/index.css';
+import DataTableExtensions from '../../react-data-table-component-extensions';
+
 
 
 
