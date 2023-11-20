@@ -71,7 +71,7 @@ export default async function getMetricCampaignStats(req, res) {
 
             // klaviyo integration should always be count!
             if (metricGroup.integration === 'Klaviyo') {
-                tally = "count"
+                tally = "unique"
             }
             for (let metric of metricGroup.metrics) {
 
