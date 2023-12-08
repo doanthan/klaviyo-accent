@@ -57,7 +57,7 @@ function SettingsPanel({ grid, setGrid, handleUnsubscribe }) {
                 </Col>
                 <Col xs='4'>
                     <FormGroup>
-                        <Label for="email">Email to Unsubscribe</Label>
+                        <Label for="email">Email to Suppress</Label>
                         <input className="form-control" name="email" id="email" {...register('email')} />
                     </FormGroup>
                     <div className="text-center py-3">

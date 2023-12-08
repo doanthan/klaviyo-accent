@@ -94,7 +94,7 @@ const MultiAccountReporting = ({ }) => {
                 toggle("Unsubscribe");
               }}
             >
-              <h6>Unsubscribe</h6>
+              <h6>Suppress</h6>
             </NavLink>
           </NavItem>
 
