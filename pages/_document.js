@@ -37,7 +37,7 @@ export default function Document() {
         ></script>
         <script
           type="application/javascript"
-          src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${process.env.NEXT_PUBLIC_KLAVIYO_PUBLIC_KEY}`}
+          src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=TEST12`}
         ></script>
       </Head>
       <body>

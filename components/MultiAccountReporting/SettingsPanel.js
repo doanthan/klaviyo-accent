@@ -1,25 +1,39 @@
 
 import {
     Form, Button, Row, Col, Card,
-    CardHeader
+    CardHeader, Input, FormGroup, Label
 } from "reactstrap";
-import { useState } from 'react'
+import { useEffect } from 'react'
 
 import ReactDataSheet from "react-datasheet";
+import { set, useForm } from "react-hook-form";
 
 
 
-function SettingsPanel({ handleSubmit, onSubmit, pkList, grid, setGrid }) {
+function SettingsPanel({ grid, setGrid, handleUnsubscribe }) {
 
+    const { control, handleSubmit, register, reset } = useForm();
+    const test = async (formData) => {
+        console.log(formData.email)
+        await handleUnsubscribe(formData.email);
+    }
+    useEffect(() => {
+        reset({
+            email: "",
+        })
+    }, [handleUnsubscribe])
     return (
-        <Row>
-            <Col xs='8'>
-                <Card>
-                    <CardHeader className='text-center'>
-                        Load Klaviyo Keys
-                    </CardHeader>
+        <Form onSubmit={handleSubmit(test)}>
+            <Row>
 
-                    <Form onSubmit={handleSubmit(onSubmit)}>
+                <Col xs='8'>
+
+                    <Card>
+                        <CardHeader className='text-center'>
+                            Load Klaviyo Keys
+                        </CardHeader>
+
+
                         <ReactDataSheet
                             data={grid}
                             valueRenderer={(cell) => cell.value}
@@ -36,26 +50,26 @@ function SettingsPanel({ handleSubmit, onSubmit, pkList, grid, setGrid }) {
                             className="dataSheet"
                         />
 
-                        <div className="text-center py-3">
-                            <Button type="submit" color="primary" className="btn-lg ">
-                                Submit List
-                            </Button>
-                        </div>
-                    </Form>
 
 
-                </Card>
-            </Col>
-            <Col xs='4'>
-                <h5>Klaviyo PK's loaded {pkList.length}</h5>
-                {
-                    pkList.map((pk) => {
-                        return <p key={pk.name}>[{pk.name}] {`pk_xxx...${pk.value.substring(33)}`} added! ✅ </p>;
-                    })
-                }
 
-            </Col>
-        </Row>
+                    </Card>
+                </Col>
+                <Col xs='4'>
+                    <FormGroup>
+                        <Label for="email">Email to Unsubscribe</Label>
+                        <input className="form-control" name="email" id="email" {...register('email')} />
+                    </FormGroup>
+                    <div className="text-center py-3">
+                        <Button type="submit" color="primary">
+                            Unsubscribe
+                        </Button>
+                    </div>
+
+
+                </Col>
+            </Row>
+        </Form>
     )
 }
 
