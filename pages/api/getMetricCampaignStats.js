@@ -44,7 +44,7 @@ export default async function getMetricCampaignStats(req, res) {
     //             name: 'Bounced Email',
     //                 account: 'Adidas',
     //                     integration: 'Klaviyo',
-    //                         pk: 'pk_76f7117c80c802c78bfedaaeacdeeba0ec',
+    //                         pk: 'pk_xxx',
     //                             conversion: 5
     // },
     let results = []
