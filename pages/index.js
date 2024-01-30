@@ -32,14 +32,23 @@ const MultiAccountReporting = ({ }) => {
 
 
 
-  const handleUnsubscribe = async (email) => {
+  const handleUnsubscribe = async (email, isDeleteProfile = false) => {
     console.log(email)
+    if (!isDeleteProfile) {
+      grid.map(async line => {
+        if (!line[0].readOnly && line[0].value != "") {
+          const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}unsubscribe?email=${email}&pk=${line[0].value}`)
+        }
+      })
+    }
 
-    grid.map(async line => {
-      if (!line[0].readOnly && line[0].value != "") {
-        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}unsubscribe?email=${email}&pk=${line[0].value}`)
-      }
-    })
+    if (isDeleteProfile) {
+      grid.map(async line => {
+        if (!line[0].readOnly && line[0].value != "") {
+          const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}delete?email=${email}&pk=${line[0].value}`)
+        }
+      })
+    }
 
     //state management is hard
     const newGrid = [
@@ -64,8 +73,10 @@ const MultiAccountReporting = ({ }) => {
       [{ value: "" }],
       [{ value: "" }],
       [{ value: "" }],
-      [{ value: "" }], [{ value: "" }],
-      [{ value: "" }], [{ value: "" }],
+      [{ value: "" }],
+      [{ value: "" }],
+      [{ value: "" }],
+      [{ value: "" }],
       [{ value: "" }],
       [{ value: "" }],
       [{ value: "" }],
