@@ -13,28 +13,35 @@ export default async function getMetrics(req, res) {
     }
 
     try {
-        const url = "https://a.klaviyo.com/api/data-privacy-deletion-jobs/"
-        const deleteInfo = {
-            data: {
-                type: 'data-privacy-deletion-job',
-                attributes: {
-                    profile: {
-                        data: {
-                            type: 'profile',
-                            attributes: { email }
+        const { data } = await axios.get(`https://a.klaviyo.com/api/profiles?filter=equals(email,"${email}")`, header)
+        if (data) {
+            const url = "https://a.klaviyo.com/api/data-privacy-deletion-jobs/"
+            const deleteInfo = {
+                data: {
+                    type: 'data-privacy-deletion-job',
+                    attributes: {
+                        profile: {
+                            data: {
+                                type: 'profile',
+                                attributes: { email }
+                            }
                         }
                     }
                 }
             }
-        }
-        await axios.post(url, deleteInfo, header)
-        console.log("suppresed " + email)
+            await axios.post(url, deleteInfo, header)
+            console.log("suppresed " + email)
 
-    } catch (e) {
+            return res.status(200).send({ response: "deleted" });
+        } else {
+            return res.status(200).send({ response: "notFound" });
+        }
+    }
+
+    catch (e) {
         console.log(e.message)
     }
 
 
 
-    return res.status(200).send("SUCCESS");
 }

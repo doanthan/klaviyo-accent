@@ -33,6 +33,9 @@ export default async function getMetrics(req, res) {
             }
             await axios.post(`https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/`, suppressInfo, header)
             console.log("suppresed " + email)
+            return res.status(200).send({ response: "unsubscribed" });
+        } else {
+            return res.status(200).send({ response: "notFound" });
         }
     } catch (e) {
         console.log(e.message)
@@ -40,5 +43,5 @@ export default async function getMetrics(req, res) {
 
 
 
-    return res.status(200).send("SUCCESS");
+
 }

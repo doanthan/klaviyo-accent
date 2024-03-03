@@ -10,16 +10,15 @@ import {
   NavLink,
   Badge, CardHeader
 } from "reactstrap";
-import { useForm, Controller } from "react-hook-form";
-import Tabs from "components/MultiAccountReporting/Tabs"
-import ReactDataSheet from "react-datasheet";
-import classnames from "classnames";
+
 import Settings from "components/MultiAccountReporting/SettingsPanel";
-import Reports from "components/MultiAccountReporting/ReportingPanel";
+
 import { BLANK_SHEET } from 'components/MultiAccountReporting/data'
 
 
 const MultiAccountReporting = ({ }) => {
+
+  const [responses, setResponses] = useState([]);
 
   const [activeTab, setActiveTab] = useState("Unsubscribe");
   const [grid, setGrid] = useState(BLANK_SHEET);
@@ -32,9 +31,12 @@ const MultiAccountReporting = ({ }) => {
 
 
 
-  const handleUnsubscribe = async (email, isDeleteProfile = false) => {
+  const handleUnsubscribe = async (email, isForgetMe = false) => {
     console.log(email)
-    if (!isDeleteProfile) {
+    setResponses([])
+    let newReponses = []
+    if (!isForgetMe) {
+      newReponses.push(`Unsubscribing ${email} from all accounts...`)
       grid.map(async line => {
         if (!line[0].readOnly && line[0].value != "") {
           const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}unsubscribe?email=${email}&pk=${line[0].value}`)
@@ -42,8 +44,9 @@ const MultiAccountReporting = ({ }) => {
       })
     }
 
-    if (isDeleteProfile) {
+    if (isForgetMe) {
       grid.map(async line => {
+        newReponses.push(`Completely removing ${email} from all accounts...`)
         if (!line[0].readOnly && line[0].value != "") {
           const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}delete?email=${email}&pk=${line[0].value}`)
         }
@@ -73,10 +76,8 @@ const MultiAccountReporting = ({ }) => {
       [{ value: "" }],
       [{ value: "" }],
       [{ value: "" }],
-      [{ value: "" }],
-      [{ value: "" }],
-      [{ value: "" }],
-      [{ value: "" }],
+      [{ value: "" }], [{ value: "" }],
+      [{ value: "" }], [{ value: "" }],
       [{ value: "" }],
       [{ value: "" }],
       [{ value: "" }],
@@ -97,10 +98,6 @@ const MultiAccountReporting = ({ }) => {
         <Nav tabs className="no-bottom-border nav-justified mx-6">
           <NavItem>
             <NavLink
-              className={classnames(
-                { active: activeTab === "Unsubscribe" },
-                "clickable"
-              )}
               onClick={() => {
                 toggle("Unsubscribe");
               }}

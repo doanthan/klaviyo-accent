@@ -10,7 +10,7 @@ import { set, useForm } from "react-hook-form";
 
 
 
-function SettingsPanel({ grid, setGrid, handleUnsubscribe }) {
+function SettingsPanel({ grid, setGrid, handleUnsubscribe, displayResponse }) {
     const [modal, setModal] = useState(false);
     const [email, setEmail] = useState("")
     const toggle = () => setModal(!modal);
@@ -24,16 +24,12 @@ function SettingsPanel({ grid, setGrid, handleUnsubscribe }) {
 
 
     const unsubscribeProfile = async () => {
-        console.log(email)
-        console.log("HELLO!")
-        await handleUnsubscribe(email);
+        const data = await handleUnsubscribe(email);
         setEmail("")
     }
 
     const deleteProfile = async () => {
-        console.log(email)
-        console.log("HELLO!")
-        await handleUnsubscribe(email, true);
+        const data = await handleUnsubscribe(email, true);
         setEmail("")
         toggle()
     }
@@ -88,6 +84,9 @@ function SettingsPanel({ grid, setGrid, handleUnsubscribe }) {
                             Delete Profile
                         </Button>
                     </div>
+                    {/* <div>
+                        {displayResponse}
+                    </div> */}
                     <Modal isOpen={modal} toggle={toggle}>
                         <ModalHeader toggle={toggle}>Delete Profile</ModalHeader>
                         <ModalBody>
