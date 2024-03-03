@@ -31,12 +31,11 @@ export default async function getMetrics(req, res) {
             }
             const result = await axios.post(url, deleteInfo, header)
             console.log("removed " + email)
-            console.log(result.status)
             console.log(result.data)
 
             return res.status(200).send({ response: `✅ Removed ${email}` });
         } else {
-            return res.status(200).send({ response: "User Not Found" });
+            return res.status(200).send({ response: `${email} Not Found` });
         }
     }
 

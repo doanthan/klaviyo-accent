@@ -47,7 +47,7 @@ export default async function getMetrics(req, res) {
             }
         } else {
             console.log(data)
-            return res.status(200).send({ response: "Profile not found" });
+            return res.status(200).send({ response: `${email} not found` });
 
         }
 
