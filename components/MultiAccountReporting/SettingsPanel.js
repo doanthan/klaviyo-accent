@@ -1,7 +1,7 @@
 
 import {
     Form, Button, Row, Col, Card,
-    CardHeader, Modal, ModalBody, ModalHeader, ModalFooter, FormGroup, Label
+    CardHeader, Modal, ModalBody, ModalHeader, ModalFooter, FormGroup, Label, Spinner
 } from "reactstrap";
 import { useEffect, useState } from 'react'
 
@@ -10,7 +10,7 @@ import { set, useForm } from "react-hook-form";
 
 
 
-function SettingsPanel({ grid, setGrid, handleUnsubscribe, displayResponse }) {
+function SettingsPanel({ grid, setGrid, handleUnsubscribe, displayResponse, responses, loading }) {
     const [modal, setModal] = useState(false);
     const [email, setEmail] = useState("")
     const toggle = () => setModal(!modal);
@@ -75,15 +75,26 @@ function SettingsPanel({ grid, setGrid, handleUnsubscribe, displayResponse }) {
                         <input className="form-control" name="email" id="email" onChange={handleEmailChange} value={email} />
                     </FormGroup>
                     <div className="text-center pb-3">
-                        <Button onClick={unsubscribeProfile} color="primary">
+                        <Button onClick={unsubscribeProfile} color="primary" disabled={loading}>
                             Unsubscribe
                         </Button>
                     </div>
                     <div className="text-center pb-3">
-                        <Button onClick={toggle} color="danger">
+                        <Button onClick={toggle} color="danger" disabled={loading}>
                             Delete Profile
                         </Button>
                     </div>
+                    {
+                        loading && <Spinner color="primary" />
+                    }
+                    {
+                        loading && <p>Processing...</p>
+                    }
+                    {
+                        responses && <div>
+                            {responses.map(paragraph => <p>{paragraph}</p>)}
+                        </div>
+                    }
                     {/* <div>
                         {displayResponse}
                     </div> */}
@@ -93,10 +104,10 @@ function SettingsPanel({ grid, setGrid, handleUnsubscribe, displayResponse }) {
                             This will delete the Profile and all their events of this email address from your Klaviyo accounts. Are you sure?
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="danger" onClick={deleteProfile}>
+                            <Button color="danger" onClick={deleteProfile} disabled={loading}>
                                 Delete!
                             </Button>{' '}
-                            <Button color="secondary" onClick={toggle}>
+                            <Button color="secondary" onClick={toggle} disabled={loading}>
                                 Cancel
                             </Button>
                         </ModalFooter>

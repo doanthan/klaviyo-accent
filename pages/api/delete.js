@@ -14,7 +14,7 @@ export default async function getMetrics(req, res) {
 
     try {
         const { data } = await axios.get(`https://a.klaviyo.com/api/profiles?filter=equals(email,"${email}")`, header)
-        if (data) {
+        if (data.data.length > 0) {
             const url = "https://a.klaviyo.com/api/data-privacy-deletion-jobs/"
             const deleteInfo = {
                 data: {
@@ -29,17 +29,20 @@ export default async function getMetrics(req, res) {
                     }
                 }
             }
-            await axios.post(url, deleteInfo, header)
-            console.log("suppresed " + email)
+            const result = await axios.post(url, deleteInfo, header)
+            console.log("removed " + email)
+            console.log(result.status)
+            console.log(result.data)
 
-            return res.status(200).send({ response: "deleted" });
+            return res.status(200).send({ response: `Removed ${email}` });
         } else {
-            return res.status(200).send({ response: "notFound" });
+            return res.status(200).send({ response: "User Not Found" });
         }
     }
 
     catch (e) {
         console.log(e.message)
+        return res.status(200).send({ response: e.message });
     }
 
 
