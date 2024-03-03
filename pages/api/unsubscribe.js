@@ -38,7 +38,7 @@ export default async function getMetrics(req, res) {
                     console.log("suppresed " + email)
                     console.log(data.status)
                     console.log("YEAH!!")
-                    return res.status(200).send({ response: 'Profile unsubscribed' });
+                    return res.status(200).send({ response: `✅ ${email} unsubscribed` });
                 } else {
                     return res.status(200).send({ response: "Something went wrong" });
                 }

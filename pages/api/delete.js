@@ -34,7 +34,7 @@ export default async function getMetrics(req, res) {
             console.log(result.status)
             console.log(result.data)
 
-            return res.status(200).send({ response: `Removed ${email}` });
+            return res.status(200).send({ response: `✅ Removed ${email}` });
         } else {
             return res.status(200).send({ response: "User Not Found" });
         }
