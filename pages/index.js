@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-import moment from "moment";
+import Image from 'next/image'
 import {
   Form, Button, Container, Row, Col, Card, TabContent,
   TabPane,
@@ -91,7 +91,8 @@ const MultiAccountReporting = ({ }) => {
     <Container className="px-4">
 
       <div className="text-center mt-40">
-        <h1>Accent Group - Klaviyo Portal</h1>
+        <Image src="/images/accent.png" height={100} width={100} />
+        <h1>Klaviyo Portal</h1>
         <hr className="mt-40" />
       </div>
       <div>
