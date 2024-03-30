@@ -35,7 +35,7 @@ const MultiAccountReporting = ({ }) => {
       newReponses.push(`Unsubscribing ${email} from all accounts...`)
       for (const line of grid) {
         if (!line[0].readOnly && line[0].value != "") {
-          const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}unsubscribe?email=${email}&pk=${line[0].value}`)
+          const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}unsubscribe?email=${encodeURIComponent(email)}&pk=${line[0].value}`)
           console.log(data.reponse)
           newReponses.push(`${line[0].value} has response: ${data.response}`)
         }
@@ -46,7 +46,7 @@ const MultiAccountReporting = ({ }) => {
       newReponses.push(`Completely removing ${email} from all accounts...`)
       for (const line of grid) {
         if (!line[0].readOnly && line[0].value != "") {
-          const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}delete?email=${email}&pk=${line[0].value}`)
+          const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}delete?email=${encodeURIComponent(email)}&pk=${line[0].value}`)
           newReponses.push(`${line[0].value} has response: ${data.response}`)
         }
       }
