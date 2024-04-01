@@ -3,6 +3,7 @@ import axios from "axios";
 export default async function getMetrics(req, res) {
 
     const { pk, email } = req.query
+    console.log(email)
 
     const header = {
         headers: {
@@ -11,10 +12,10 @@ export default async function getMetrics(req, res) {
         }
     }
     try {
-        const { data } = await axios.get(`https://a.klaviyo.com/api/profiles?filter=equals(email,"${email}")`, header)
+        const { data } = await axios.get(`https://a.klaviyo.com/api/profiles?filter=equals(email,"${encodeURIComponent(email)}")`, header)
         if (data.data.length > 0) {
             try {
-                const { data } = await axios.get(`https://a.klaviyo.com/api/profiles?filter=equals(email,"${email}")`, header)
+                const { data } = await axios.get(`https://a.klaviyo.com/api/profiles?filter=equals(email,"${encodeURIComponent(email)}")`, header)
                 console.log(data)
                 if (data) {
                     const suppressInfo = {
@@ -35,9 +36,6 @@ export default async function getMetrics(req, res) {
                         }
                     }
                     const { data } = await axios.post(`https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/`, suppressInfo, header)
-                    console.log("suppresed " + email)
-                    console.log(data.status)
-                    console.log("YEAH!!")
                     return res.status(200).send({ response: `✅ ${email} unsubscribed` });
                 } else {
                     return res.status(200).send({ response: "Something went wrong" });

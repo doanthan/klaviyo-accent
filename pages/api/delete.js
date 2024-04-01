@@ -13,7 +13,7 @@ export default async function getMetrics(req, res) {
     }
 
     try {
-        const { data } = await axios.get(`https://a.klaviyo.com/api/profiles?filter=equals(email,"${email}")`, header)
+        const { data } = await axios.get(`https://a.klaviyo.com/api/profiles?filter=equals(email,"${encodeURIComponent(email)}")`, header)
         if (data.data.length > 0) {
             const url = "https://a.klaviyo.com/api/data-privacy-deletion-jobs/"
             const deleteInfo = {
