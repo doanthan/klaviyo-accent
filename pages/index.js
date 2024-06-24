@@ -24,7 +24,10 @@ const MultiAccountReporting = ({ }) => {
   const [grid, setGrid] = useState(BLANK_SHEET);
   const [loading, setLoading] = useState(false)
 
-
+  const obfuscateValue = (value) => {
+    if (value.length <= 4) return value;
+    return 'xxxx'.repeat((value.length - 4) / 4) + value.slice(-4);
+  };
 
   const handleUnsubscribe = async (email, isForgetMe = false) => {
     setLoading(true)
@@ -35,9 +38,10 @@ const MultiAccountReporting = ({ }) => {
       newReponses.push(`Unsubscribing ${email} from all accounts...`)
       for (const line of grid) {
         if (!line[0].readOnly && line[0].value != "") {
+          const obfuscatedValue = obfuscateValue(line[0].value);
           const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}unsubscribe?email=${encodeURIComponent(email)}&pk=${line[0].value}`)
           console.log(data.reponse)
-          newReponses.push(`${line[0].value} has response: ${data.response}`)
+          newReponses.push(`${obfuscatedValue} has response: ${data.response}`)
         }
       }
     }
@@ -46,8 +50,9 @@ const MultiAccountReporting = ({ }) => {
       newReponses.push(`Completely removing ${email} from all accounts...`)
       for (const line of grid) {
         if (!line[0].readOnly && line[0].value != "") {
+          const obfuscatedValue = obfuscateValue(line[0].value);
           const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}delete?email=${encodeURIComponent(email)}&pk=${line[0].value}`)
-          newReponses.push(`${line[0].value} has response: ${data.response}`)
+          newReponses.push(`${obfuscatedValue} has response: ${data.response}`)
         }
       }
       setResponses(newReponses)
